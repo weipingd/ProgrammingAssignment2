@@ -1,15 +1,36 @@
-## Put comments here that give an overall description of what your
-## functions do
+## Calculate inverse matrix and cache the result for future call
 
-## Write a short comment describing this function
+## cache inverse matrix
 
-makeCacheMatrix <- function(x = matrix()) {
-
+makeCacheMatrix <- function (x = number ()) {
+  cachedata <- NULL
+  setMatrix <- function(matrixdata) {
+    x <<- matrixdata
+    cachedata <<- NULL
+  }
+  getMatrix <- function() {
+    x
+  }
+  cacheInverse <- function(solve) {
+    cachedata <<- solve
+  }
+  getInverse <- function() {
+    cachedata
+  }
+  list(sMatrix = setMatrix, gMatrix = getMatrix, cInverse = cacheInverse, gInverse = getInverse)
 }
 
+## Return the inverse matrix of the original maxtrix
 
-## Write a short comment describing this function
-
-cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+cacheSolve <- function(y, ...) {
+  inverse <- y$gInverse()
+  if (!is.null(inverse)) {
+    message("getting cached data")
+    inverse
+  }
+  data <- y$gMatrix()
+  inverse <- solve(data)
+  y$cInverse(inverse)
+  inverse
 }
+
